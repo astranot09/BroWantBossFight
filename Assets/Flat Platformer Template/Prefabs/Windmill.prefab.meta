@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ce41f33a083de1240ab094faea6c2e8e
+timeCreated: 1528658198
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 108101
+  packageName: Flat Platformer Template
+  packageVersion: 1.0
+  assetPath: Assets/Flat Platformer Template/Prefabs/Windmill.prefab
+  uploadId: 253472
