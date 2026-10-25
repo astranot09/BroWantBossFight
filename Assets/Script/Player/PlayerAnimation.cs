@@ -4,6 +4,10 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
 
+
+    [Header("Walk Particle")]
+    [SerializeField] private ParticleSystem walkParticleSystem;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -21,5 +25,12 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayAttackAnimation()
     {
         animator.SetTrigger("isAttacking");
+    }
+
+
+
+    public void PlayWalkSFX()
+    {
+        walkParticleSystem.Play();
     }
 }

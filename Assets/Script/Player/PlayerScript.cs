@@ -23,6 +23,13 @@ public class PlayerScript : MonoBehaviour, IDamageable
     [Header("VFX")]
     [SerializeField] private GameObject deathVFX;
 
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+
     public void PlayerDeath()
     {
         Instantiate(deathVFX,transform.position,Quaternion.identity);
