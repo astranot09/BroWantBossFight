@@ -4,7 +4,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneController.instance.LoadScene("Gameplay");
+        GameStateManager.instance.SwitchState(GameState.GameplayScene);
     }
 
     public void ExitGame()

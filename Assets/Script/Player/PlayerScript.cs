@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour, IDamageable
@@ -14,21 +16,40 @@ public class PlayerScript : MonoBehaviour, IDamageable
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
+    public int MaxHealth => maxHealth;
     [SerializeField] private int currentHealth;
     public int CurrentHealth => currentHealth;
 
     [Header("Immunity")]
     [SerializeField] private bool isImmune;
 
+    [Header("Feedback Hurt")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float durationBlink = 0.4f;
+    private Coroutine blinkCoroutine;
+    [SerializeField] private GameObject popUpDamagePrefab;
+    [SerializeField] private float popUpTargetX = 1f;
+
+
     [Header("VFX")]
     [SerializeField] private GameObject deathVFX;
 
+    public event Action OnPlayerHealthChange;
 
-    private void Start()
+    private void OnEnable()
     {
-        currentHealth = maxHealth;
+        GameplayManager.instance.OnGameStart += PlayerInit;
+    }
+    private void OnDisable()
+    {
+        GameplayManager.instance.OnGameStart -= PlayerInit;
     }
 
+    private void PlayerInit()
+    {
+        currentHealth = maxHealth;
+        CinemachineManager.instance.AddTarget(this.transform);
+    }
 
     public void PlayerDeath()
     {
@@ -40,6 +61,14 @@ public class PlayerScript : MonoBehaviour, IDamageable
         if (isImmune) return;
 
         currentHealth -= value;
+
+        TriggerDamagePopUp(value);
+        TriggerBlink();
+
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        OnPlayerHealthChange?.Invoke();
+
         if (currentHealth <= 0)
         {
             Debug.Log("Dead");
@@ -51,4 +80,31 @@ public class PlayerScript : MonoBehaviour, IDamageable
     {
         isImmune = x;
     }
+
+
+    private void TriggerDamagePopUp(int value)
+    {
+        float randomX = UnityEngine.Random.Range(-popUpTargetX, popUpTargetX);
+        Vector2 posSpawn = new Vector2(transform.position.x + randomX, transform.position.y + 0.5f);
+        GameObject x = Instantiate(popUpDamagePrefab, posSpawn, Quaternion.identity);
+        x.GetComponent<PopUpDamage>().SetUpPopUpDamage(value);
+    }
+    private void TriggerBlink()
+    {
+        if (blinkCoroutine != null)
+        {
+            StopCoroutine(blinkCoroutine);
+        }
+
+        blinkCoroutine = StartCoroutine(SpriteBlink());
+    }
+
+    private IEnumerator SpriteBlink()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSecondsRealtime(durationBlink);
+        spriteRenderer.color = Color.white;
+        blinkCoroutine = null;
+    }
+
 }

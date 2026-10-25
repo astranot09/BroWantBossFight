@@ -23,6 +23,10 @@ public class CinemachineManager : MonoBehaviour
         originalLens = cam.Lens.OrthographicSize;
     }
 
+    public void AddTarget(Transform target)
+    {
+        cam.Target.TrackingTarget = target;
+    }
 
     public void ChangeCamValue(float value)
     {
