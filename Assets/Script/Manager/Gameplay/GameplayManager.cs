@@ -19,8 +19,8 @@ public class GameplayManager : MonoBehaviour
 
 
     public event Action OnGameStart;
-    public event Action OnBattleStart;
-    public event Action OnGameFinish;
+    //public event Action OnBattleStart;
+    //spublic event Action OnGameFinish;
 
     private void Start()
     {
@@ -29,6 +29,7 @@ public class GameplayManager : MonoBehaviour
 
     public void GameStart()
     {
+        GameStateManager.instance.SwitchState(GameState.GameStart);
         OnGameStart?.Invoke();
     }
 }

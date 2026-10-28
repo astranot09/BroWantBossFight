@@ -3,9 +3,28 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
+
+    public static CharacterController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+
+    [SerializeField] private PlayerInput playerInput;
+
     [Header("Reference")]
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
+
+    private void Start()
+    {
+        DisabledActionMap();
+    }
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -28,5 +47,14 @@ public class CharacterController : MonoBehaviour
         {
             playerMovement.PlayerDash();
         }
+    }
+
+    public void ActivatedActionMap()
+    {
+        playerInput.ActivateInput();
+    }
+    public void DisabledActionMap()
+    {
+        playerInput.DeactivateInput();
     }
 }

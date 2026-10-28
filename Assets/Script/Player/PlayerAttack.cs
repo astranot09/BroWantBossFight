@@ -94,4 +94,12 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.red;
     }
 
+    private void OnEnable()
+    {
+        Time.timeScale = 1;
+    }
+    private void OnDisable()
+    {
+        Time.timeScale = 1;
+    }
 }

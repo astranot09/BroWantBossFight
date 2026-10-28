@@ -25,6 +25,8 @@ public class GameStateManager : MonoBehaviour
     }
 
     [SerializeField] private GameState currentState;
+
+
     public void SwitchState(GameState state)
     {
         if (currentState == state) return;
@@ -43,10 +45,15 @@ public class GameStateManager : MonoBehaviour
                 SceneController.instance.LoadScene("Gameplay");
                 break;
             case GameState.GameStart:
+                CharacterController.instance.ActivatedActionMap();
                 break;
             case GameState.PlayerLose:
+                GameOverManager.instance.PlayerLose();
+                CharacterController.instance.DisabledActionMap();
                 break;
             case GameState.PlayerWin:
+                GameOverManager.instance.PlayerWin();
+                CharacterController.instance.DisabledActionMap();
                 break;
         }
     }

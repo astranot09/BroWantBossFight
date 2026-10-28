@@ -54,6 +54,8 @@ public class PlayerScript : MonoBehaviour, IDamageable
     public void PlayerDeath()
     {
         Instantiate(deathVFX,transform.position,Quaternion.identity);
+        GameStateManager.instance.SwitchState(GameState.PlayerLose);
+        gameObject.SetActive(false);
     }
 
     public void TakeDamage(int value)
