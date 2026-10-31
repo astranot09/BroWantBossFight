@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -1557013538026691241, guid: 6bb171c3448dfbf4280948c6420fcefe, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -137,7 +137,13 @@ MonoBehaviour:
   animationType: 1
   scaleTarget: 1.2
   targetRotateValue: 5
-  animationDuration: 0.3
+  uiTransform: {fileID: 0}
+  targetTransform: {fileID: 0}
+  animationMoveDuration: 0.5
+  entryEaseType: 26
+  moveOnStart: 0
+  animationHoverDuration: 0.2
+  hoverAnimation: 0
 --- !u!1 &6994425101158771014
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,8 +211,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82d6b01ec9b98a747a6fc46793ce8c7c, type: 2}
+  m_sharedMaterial: {fileID: 8690494779414452589, guid: 82d6b01ec9b98a747a6fc46793ce8c7c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

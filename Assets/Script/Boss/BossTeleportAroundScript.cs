@@ -74,6 +74,7 @@ public class BossTeleportAroundScript : MonoBehaviour
         while (randomIndex == currentLocationIndex);
 
         Instantiate(teleportEffect, transform.position, Quaternion.identity);
+        AudioManager.instance.PlaySFX(AudioManager.instance.enemyTeleport);
         currentLocationIndex = randomIndex;
         transform.parent.position = transformLocations[randomIndex].position;
         Instantiate(teleportEffect, transform.position, Quaternion.identity);

@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerDash()
     {
         if(isDashing) return;
+        AudioManager.instance.PlaySFX(AudioManager.instance.playerDash);
         StartCoroutine(DashCoroutine());
     }
 

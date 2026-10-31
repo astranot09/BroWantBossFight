@@ -70,8 +70,12 @@ public class BulletScript : MonoBehaviour
     IEnumerator CountDownDestroy()
     {
         yield return new WaitForSeconds(bulletLife);
-        if(isKaboom)
+        if (isKaboom)
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.enemyDeath);
             DamageArea();
+        }
+            
         Destroy(gameObject);
     }
 

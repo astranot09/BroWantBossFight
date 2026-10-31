@@ -19,6 +19,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip swordSwing;
     public AudioClip swordHit;
     public AudioClip enemyDeath;
+    public AudioClip playerHurt;
+    public AudioClip playerParry;
+    public AudioClip rocketHit;
+    public AudioClip playerDash;
+    public AudioClip buttonHit;
+    public AudioClip enemyTeleport;
 
     private void Start()
     {

@@ -164,6 +164,7 @@ public class BossScript : MonoBehaviour, IDamageable
     public void BossDeath()
     {
         GameStateManager.instance.SwitchState(GameState.PlayerWin);
+        AudioManager.instance.PlaySFX(AudioManager.instance.enemyDeath);
         gameObject.SetActive(false);
     }
 

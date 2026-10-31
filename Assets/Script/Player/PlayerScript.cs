@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+
 
 public class PlayerScript : MonoBehaviour, IDamageable
 {
@@ -22,13 +25,22 @@ public class PlayerScript : MonoBehaviour, IDamageable
 
     [Header("Immunity")]
     [SerializeField] private bool isImmune;
+    [SerializeField] private float timePauseDuration = 0.3f;
+    [SerializeField] private float timeScalePause = 0.1f;
+    [SerializeField] private ParticleSystem parryVFX;
+
+    [Header("Light Feedback")]
+    [SerializeField] private Light2D light2D;
 
     [Header("Feedback Hurt")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float durationBlink = 0.4f;
     private Coroutine blinkCoroutine;
+
     [SerializeField] private GameObject popUpDamagePrefab;
     [SerializeField] private float popUpTargetX = 1f;
+
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
 
     [Header("VFX")]
@@ -38,12 +50,14 @@ public class PlayerScript : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        currentHealth = maxHealth;
         GameplayManager.instance.OnGameStart += PlayerInit;
     }
     private void OnDisable()
     {
         GameplayManager.instance.OnGameStart -= PlayerInit;
     }
+
 
     private void PlayerInit()
     {
@@ -60,12 +74,20 @@ public class PlayerScript : MonoBehaviour, IDamageable
 
     public void TakeDamage(int value)
     {
-        if (isImmune) return;
+        if (isImmune)
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.playerParry);
+            StartCoroutine(ParryFeedbackIenumerator());
+            parryVFX.Play(true);
+            return;
+        }
 
         currentHealth -= value;
+        AudioManager.instance.PlaySFX(AudioManager.instance.playerHurt);
 
         TriggerDamagePopUp(value);
         TriggerBlink();
+        TriggerCameraShake();
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -82,7 +104,10 @@ public class PlayerScript : MonoBehaviour, IDamageable
     {
         isImmune = x;
     }
-
+    private void TriggerCameraShake()
+    {
+        impulseSource.GenerateImpulse();
+    }
 
     private void TriggerDamagePopUp(int value)
     {
@@ -104,9 +129,16 @@ public class PlayerScript : MonoBehaviour, IDamageable
     private IEnumerator SpriteBlink()
     {
         spriteRenderer.color = Color.red;
+
         yield return new WaitForSecondsRealtime(durationBlink);
+
         spriteRenderer.color = Color.white;
         blinkCoroutine = null;
     }
-
+    IEnumerator ParryFeedbackIenumerator()
+    {
+        Time.timeScale = timeScalePause;
+        yield return new WaitForSecondsRealtime(timePauseDuration);
+        Time.timeScale = 1f;
+    }
 }

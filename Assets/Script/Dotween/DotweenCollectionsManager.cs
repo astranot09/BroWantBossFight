@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 [System.Serializable] 
 public enum AnimationType
@@ -46,11 +47,17 @@ public class DotweenCollectionsManager : MonoBehaviour, IPointerEnterHandler, IP
 
         if (moveOnStart)
         {
-            MoveInAnimation();
+            StartCoroutine(PlayMoveInRoutine());
         }
 
     }
+    private IEnumerator PlayMoveInRoutine()
+    {
+        
+        yield return null;
 
+        MoveInAnimation();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -79,7 +86,8 @@ public class DotweenCollectionsManager : MonoBehaviour, IPointerEnterHandler, IP
             .SetEase(entryEaseType)
             .SetUpdate(true));
         }
-        
+        startSequence.SetDelay(0.5f)
+                     .SetUpdate(UpdateType.Normal, true);
     }
 
 

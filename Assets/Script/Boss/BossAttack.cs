@@ -24,6 +24,7 @@ public class BossAttack : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private BossScript bossScript;
+    [SerializeField] private Animator animator;
 
     private void Update()
     {
@@ -78,6 +79,7 @@ public class BossAttack : MonoBehaviour
         GameObject spawnBullet = Instantiate(missliePrefab, transform.position, Quaternion.identity);
         spawnBullet.GetComponent<BulletScript>().SetUpBullet(bulletHellDamage, bulletHellSpeed, true);
         spawnBullet.transform.rotation = transform.rotation;
+        animator.SetTrigger("isAttack");
     }
 
     IEnumerator SpawnBulletFollowCoroutine()
@@ -95,6 +97,7 @@ public class BossAttack : MonoBehaviour
         GameObject spawnBullet = Instantiate(missliePrefab, transform.position, Quaternion.identity);
         spawnBullet.GetComponent<BulletScript>().SetUpBullet(bulletHellDamage, bulletHellSpeed, false);
         spawnBullet.transform.rotation = transform.rotation;
+        animator.SetTrigger("isAttack");
     }
 
     private void ChangeStateToIdle()

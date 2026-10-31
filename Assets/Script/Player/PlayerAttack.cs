@@ -55,8 +55,8 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log("hit enemy");
                 damageable.TakeDamage(playerDamage);
                 Vector2 hitPos = hit.ClosestPoint(transform.position);
-                AudioManager.instance.PlaySFX(AudioManager.instance.swordHit);
-                impulseSource.GenerateImpulse();
+
+                OnWeaponHit();
                 StartCoroutine(HitFeedbackIenumerator());
 
                 Instantiate(hitParticle, hitPos, Quaternion.identity);
@@ -69,6 +69,11 @@ public class PlayerAttack : MonoBehaviour
         weaponParticle.Play(true);
     }
 
+    public void OnWeaponHit()
+    {
+        AudioManager.instance.PlaySFX(AudioManager.instance.swordHit);
+        impulseSource.GenerateImpulse();
+    }
 
     IEnumerator HitFeedbackIenumerator()
     {
